@@ -37,7 +37,30 @@ int No::getChave() {
 }
 
 int No::checarAltura() {
-	return 13;
+
+	if (this->esq == nullptr && this->dir == nullptr) {
+		return 0;
+	}
+		
+	if (this->dir == nullptr && this->esq != nullptr) {
+		return (this->esq->checarAltura() + 1);
+	}
+
+	if (this->esq == nullptr && this->dir != nullptr) {
+		return (this->dir->checarAltura() +1);
+	}
+
+	int hEsq;
+	int hDir;
+
+	hEsq = this->esq->checarAltura() + 1;
+	hDir = this->dir->checarAltura() + 1;
+
+	if (hEsq < hDir) {
+		return hDir;
+	} else {
+		return hEsq;
+	}
 }
 
 bool No::isRaiz() {
