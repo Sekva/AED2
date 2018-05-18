@@ -15,8 +15,11 @@ class Arvore {
 		No* pegarNo(int chave);
 		void percorrerArvore();
 		No* getMin();
+		No* getMin(No* n);
 		No* getMax();
-		No* getAntecessor();
+		No* getMax(No* n);
+		No* getAntecessor(No* n);
+		No* getSucessor(No* n);
 
 	private:
 		void listarArvore(No* n);

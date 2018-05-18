@@ -82,6 +82,11 @@ No* Arvore::getMin() {
 
 	No* n = this->raiz;
 
+	return this->getMin(n);
+}
+
+No* Arvore::getMin(No* n) {
+
 	if(n == nullptr) {
 		return n;
 	}
@@ -91,18 +96,69 @@ No* Arvore::getMin() {
 	}
 
 	return n;
+	
 }
 
 No* Arvore::getMax() {
 
 	No* n = this->raiz;
+	
+	return this->getMax(n);
 
+}
+
+No* Arvore::getMax(No* n) {
+	
 	if(n == nullptr) {
 		return n;
 	}
 
 	while(n->getFilhoDir() != nullptr) {
 		n = n->getFilhoDir();
+	}
+
+	return n;
+
+
+}
+
+
+No* Arvore::getAntecessor(No* n) {
+	
+	if(n == nullptr) {
+		return n;
+	}
+
+	if(n->getFilhoEsq() != nullptr) {
+		return this->getMax(n->getFilhoEsq());
+	}
+
+	No* y = n->getPai();
+
+	while(y != nullptr && n == y->getFilhoEsq()) {
+		n = y;
+		y = y->getPai();
+	}
+
+	return n;
+
+}
+
+No* Arvore::getSucessor(No* n) {
+	
+	if(n == nullptr) {
+		return n;
+	}
+
+	if(n->getFilhoDir() != nullptr) {
+		return this->getMin(n->getFilhoDir());
+	}
+
+	No* y = n->getPai();
+
+	while(y != nullptr && n == y->getFilhoDir()) {
+		n = y;
+		y = y->getPai();
 	}
 
 	return n;

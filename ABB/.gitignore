@@ -1,2 +1,2 @@
 #pre-compilação
-objetos/
+*.o

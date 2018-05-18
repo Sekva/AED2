@@ -11,9 +11,9 @@ int main() {
 	No n3(10);
 	No n4(34);
 	No n5(8);
-	No n6(333333);
-	No n7(99999999);
-
+	No n6(7);
+	No n7(6);
+	
 	Arvore t;
 
 	t.inserirNo(&n);
@@ -22,8 +22,9 @@ int main() {
 	t.inserirNo(&n4);
 	t.inserirNo(&n5);
 	t.inserirNo(&n6);
-	t.inserirNo(&n7);	
-	std::cout << n.checarAltura() << std::endl;
+	t.inserirNo(&n7);
+
+	std::cout << t.getMin(&n2)->getChave() << std::endl;
 	return 0;
 
 }
