@@ -33,6 +33,8 @@ void Arvore::inserirNo(No* n) {
 
 	}
 
+	n->setPai(y);
+
 	if(chaveNovoNo < y->getChave()) {
 		y->setFilhoEsq(n);
 	} else {
@@ -78,6 +80,11 @@ void Arvore::percorrerArvore() {
 
 }
 
+No* Arvore::getRaiz() {
+	return this->raiz;
+}
+
+
 No* Arvore::getMin() {
 
 	No* n = this->raiz;
@@ -96,19 +103,19 @@ No* Arvore::getMin(No* n) {
 	}
 
 	return n;
-	
+
 }
 
 No* Arvore::getMax() {
 
 	No* n = this->raiz;
-	
+
 	return this->getMax(n);
 
 }
 
 No* Arvore::getMax(No* n) {
-	
+
 	if(n == nullptr) {
 		return n;
 	}
@@ -124,7 +131,7 @@ No* Arvore::getMax(No* n) {
 
 
 No* Arvore::getAntecessor(No* n) {
-	
+
 	if(n == nullptr) {
 		return n;
 	}
@@ -145,7 +152,7 @@ No* Arvore::getAntecessor(No* n) {
 }
 
 No* Arvore::getSucessor(No* n) {
-	
+
 	if(n == nullptr) {
 		return n;
 	}

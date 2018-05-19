@@ -14,6 +14,7 @@ class Arvore {
 		void inserirNo(No* n);
 		No* pegarNo(int chave);
 		void percorrerArvore();
+		No* getRaiz();
 		No* getMin();
 		No* getMin(No* n);
 		No* getMax();
@@ -23,8 +24,6 @@ class Arvore {
 
 	private:
 		void listarArvore(No* n);
-
-
 };
 
 #endif

@@ -13,7 +13,7 @@ int main() {
 	No n5(8);
 	No n6(7);
 	No n7(6);
-	
+
 	Arvore t;
 
 	t.inserirNo(&n);
@@ -24,7 +24,7 @@ int main() {
 	t.inserirNo(&n6);
 	t.inserirNo(&n7);
 
-	std::cout << t.getMin(&n2)->getChave() << std::endl;
+	std::cout << t.getRaiz()->getChave() << std::endl;
 	return 0;
 
 }
