@@ -67,12 +67,26 @@ No* Arvore::pegarNo(int chave) {
 void Arvore::listarArvore(No* n) {
 
 	if(n == nullptr) {
+		std::cout << "X";
         return;
     }
 
-	this->listarArvore(n->getFilhoEsq());
-	std::cout << n->getChave() << std::endl;
-	this->listarArvore(n->getFilhoDir());
+	std::cout << " (";
+	std::cout << n->getChave();
+
+
+	if(n->getFilhoEsq() != nullptr && n->getFilhoDir() != nullptr) {
+		this->listarArvore(n->getFilhoEsq());
+		this->listarArvore(n->getFilhoDir());
+	} else if(n->getFilhoEsq() != nullptr) {
+		this->listarArvore(n->getFilhoEsq());
+		std::cout << " (X)";
+	} else if(n->getFilhoDir() != nullptr) {
+		std::cout << " (X)";
+		this->listarArvore(n->getFilhoDir());
+	}
+
+	std::cout << ")";
 
 }
 

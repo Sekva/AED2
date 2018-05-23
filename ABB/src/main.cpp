@@ -6,13 +6,15 @@
 
 int main() {
 
-	No n(11);
-	No n2(1223);
-	No n3(10);
-	No n4(34);
-	No n5(8);
-	No n6(7);
-	No n7(6);
+	No n(33);
+	No n2(15);
+	No n3(47);
+	No n4(10);
+	No n5(20);
+	No n6(38);
+	No n7(5);
+	No n8(12);
+	No n9(18);
 
 	Arvore t;
 
@@ -23,6 +25,8 @@ int main() {
 	t.inserirNo(&n5);
 	t.inserirNo(&n6);
 	t.inserirNo(&n7);
+	t.inserirNo(&n8);
+	t.inserirNo(&n9);
 
 	t.percorrerArvore();
 
