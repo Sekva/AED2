@@ -24,7 +24,8 @@ int main() {
 	t.inserirNo(&n6);
 	t.inserirNo(&n7);
 
-	std::cout << t.getRaiz()->getChave() << std::endl;
+	t.percorrerArvore();
+
 	return 0;
 
 }
