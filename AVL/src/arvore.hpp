@@ -21,15 +21,14 @@ class Arvore {
 		No* getMax(No* n);
 		No* getAntecessor(No* n);
 		No* getSucessor(No* n);
-
 		void setRaiz(No* r);
+
+	private:
 		void checarArvore(No* n);
 		void rotSD(No* p);
 		void rotSE(No* p);
 		void rotDD(No* p);
 		void rotDE(No* p);
-
-	private:
 		void listarArvore(No* n);
 };
 
