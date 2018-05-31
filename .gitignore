@@ -1,0 +1,7 @@
+#pre-compilação
+*.o
+
+#compilados
+ABB/build/*
+AVL/build/*
+ARN/build/*
