@@ -161,7 +161,7 @@ No* Arvore::getAntecessor(No* n) {
 		y = y->getPai();
 	}
 
-	return n;
+	return y;
 
 }
 
@@ -182,7 +182,7 @@ No* Arvore::getSucessor(No* n) {
 		y = y->getPai();
 	}
 
-	return n;
+	return y;
 
 }
 

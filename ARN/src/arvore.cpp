@@ -72,6 +72,13 @@ void Arvore::listarArvore(No* n) {
 
 	std::cout << " (";
 	std::cout << n->getChave();
+	int cor = n->getCor();
+
+	if(cor == 0) {
+		std::cout << "R";
+	} else {
+		std::cout << "N";
+	}
 
 
 	if(n->getFilhoEsq() != nullptr && n->getFilhoDir() != nullptr) {
@@ -160,7 +167,7 @@ No* Arvore::getAntecessor(No* n) {
 		y = y->getPai();
 	}
 
-	return n;
+	return y;
 
 }
 
@@ -181,7 +188,7 @@ No* Arvore::getSucessor(No* n) {
 		y = y->getPai();
 	}
 
-	return n;
+	return y;
 
 }
 
@@ -190,7 +197,7 @@ void Arvore::checarArvore(No* n) {
 	No* pai = n->getPai();
 
 	if(pai == nullptr) {
-		std::cout << "raiz" << std::endl;
+		// std::cout << "raiz" << std::endl;
 		n->setCor(1);
 		return;
 	}
@@ -329,7 +336,7 @@ void Arvore::rotSE(No* p) {
 
 void Arvore::caso1(No* n) {
 
-	std::cout << "caso 1" << std::endl;
+	// std::cout << "caso 1" << std::endl;
 
 	if(n == nullptr) {
 		return;
@@ -358,7 +365,7 @@ void Arvore::caso1(No* n) {
 
 void Arvore::caso2Esq(No* n) {
 
-	std::cout << "caso 2" << std::endl;
+	// std::cout << "caso 2" << std::endl;
 
 
 	No* novoCentro = n->getPai();
@@ -371,7 +378,7 @@ void Arvore::caso2Esq(No* n) {
 
 void Arvore::caso2Dir(No* n) {
 
-	std::cout << "caso 2" << std::endl;
+	// std::cout << "caso 2" << std::endl;
 
 
 	No* novoCentro = n->getPai();
@@ -384,7 +391,7 @@ void Arvore::caso2Dir(No* n) {
 
 void Arvore::caso3Esq(No* n) {
 
-	std::cout << "caso 3" << std::endl;
+	// std::cout << "caso 3" << std::endl;
 
 	No* pai = n->getPai();
 	No* avo = this->getAvo(n);
@@ -398,7 +405,7 @@ void Arvore::caso3Esq(No* n) {
 
 void Arvore::caso3Dir(No* n) {
 
-	std::cout << "caso 3" << std::endl;
+	// std::cout << "caso 3" << std::endl;
 
 	No* pai = n->getPai();
 	No* avo = this->getAvo(n);
