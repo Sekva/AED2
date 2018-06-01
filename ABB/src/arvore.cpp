@@ -98,7 +98,6 @@ No* Arvore::getRaiz() {
 	return this->raiz;
 }
 
-
 No* Arvore::getMin() {
 
 	No* n = this->raiz;
@@ -142,7 +141,6 @@ No* Arvore::getMax(No* n) {
 
 
 }
-
 
 No* Arvore::getAntecessor(No* n) {
 

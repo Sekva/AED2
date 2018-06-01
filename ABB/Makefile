@@ -12,7 +12,7 @@ MAIN_OBJ = ./objetos/main.o
 NOME_BIN = ./build/teste
 OBJETOS = ./objetos/main.o ./objetos/no.o ./objetos/arvore.o
 
-all : dir bin
+all : bin
 
 bin : $(OBJETOS)
 	$(CXX) $(CFLAGS) $(OBJETOS) -o $(NOME_BIN)
