@@ -1,10 +1,2 @@
 #pre-compilação
 *.o
-ABB/objetos/*
-AVL/objetos/*
-ARN/objetos/*
-
-#compilados
-ABB/build/*
-AVL/build/*
-ARN/build/*
