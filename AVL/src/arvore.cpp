@@ -231,7 +231,7 @@ void Arvore::checarArvore(No* n) {
 }
 
 void Arvore::rotSD(No* p) {
-	std::cout << "rotSD" << std::endl;
+	// std::cout << "rotSD" << std::endl;
 
 	No* u = p->getFilhoEsq();
 	No* t2 = u->getFilhoDir();
@@ -260,7 +260,7 @@ void Arvore::rotSD(No* p) {
 }
 
 void Arvore::rotSE(No* p) {
-	std::cout << "rotSE" << std::endl;
+	// std::cout << "rotSE" << std::endl;
 
 	No* z = p->getFilhoDir();
 	No* t2 = z->getFilhoEsq();
@@ -291,13 +291,13 @@ void Arvore::rotSE(No* p) {
 }
 
 void Arvore::rotDD(No* p) {
-	std::cout << "rotDD" << std::endl;
+	// std::cout << "rotDD" << std::endl;
 	this->rotSE(p->getFilhoEsq());
 	this->rotSD(p);
 }
 
 void Arvore::rotDE(No* p) {
-	std::cout << "rotDE" << std::endl;
+	// std::cout << "rotDE" << std::endl;
 	this->rotSD(p->getFilhoDir());
 	this->rotSE(p);
 }

@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
   }
 
 	const char* arquivoEntrada = argv[2];
-	std::cout << "Cosntruindo arvore a partir de: " << arquivoEntrada << '\n';
+	// std::cout << "Cosntruindo arvore a partir de: " << arquivoEntrada << '\n';
 	std::ifstream entrada(arquivoEntrada);
 
 	if(!entrada) {
