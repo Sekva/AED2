@@ -1,4 +1,4 @@
-LIBFLAGS =
+LIBFLAGS = -std=c++11
 CXX = g++
 
 SRC_DIR = ./src/
@@ -17,7 +17,7 @@ OBJS_FINAL = $(OBJS:%.o=$(OBJETOS_DIR)%.o)
 
 BIN = $(BUILD_DIR)$(BIN_NOME)
 
-all : $(BIN)
+all : limparObjetos $(BIN)
 
 $(BIN) : $(OBJS_FINAL)
 	$(CXX) $(OBJS_FINAL) -o $(BIN)
@@ -27,3 +27,6 @@ $(OBJS_FINAL) : $(OBJETOS_DIR)%.o : $(SRC_DIR)%.cpp
 
 clean :
 	rm $(BIN) $(OBJS_FINAL)
+
+limparObjetos :
+	rm $(OBJS_FINAL)
