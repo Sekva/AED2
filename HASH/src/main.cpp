@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <typeinfo>
 #include "no.hpp"
 #include "hash.hpp"
 
@@ -12,233 +14,212 @@ void printHelp() {
   std::cout << "\t-m : indica que a estrutura será uma heap mínima" << '\n';
 }
 
+int main(int argc, char* argv[]) {
+
+  ////////////////////////////////////////////////////////////////////////////
+  //Checagem dos parametros
+
+  if (argc > 1) {
+    for (int i = 1; i < argc; i++) {
+      if((argv[i] != std::string("-f")) || (argv[i] != std::string("-o")) || (argv[i] != std::string("-m")) || (argv[i] != std::string("-h"))) {
+        const char* c = std::string(argv[i]).c_str();
+        if (c[0] == '-') {
+          std::cout << "ERRO: parâmetros conflitantes" << '\n';
+          printHelp();
+          return 1;
+        }
+      }
+    }
+  }
+
+  ////////////////////////////////////////////////////////////////////////////
+
+  //Tamanho padrao do HASH
+  int tamanhoHash = 11;
 
 
+  Hash* hash = nullptr;
 
-//AINDA FALTA CONSERTAR O MAIN
+  //Falta argumentos
+  if (argc == 1) {
+    std::cout << "ERRO: parâmetros conflitantes" << '\n';
+    printHelp();
+    return 1;
+  }
 
-int main(int argc, char* argv) {
+  //Help chamado como primeiro argumento
+  if (argc == 2 && std::string(argv[1]) == "-h") {
+    std::cout << "ERRO: parâmetros conflitantes" << '\n';
+    printHelp();
+    return 0;
+  }
 
-	if(argc == 1) {
-		std::cout << "ERRO: parâmetros conflitantes" << '\n';
-		printHelp();
-    		return 1;
-	}
-
-	if(std::string(argv[1]) == "-h" && argc == 2) {
-		printHelp();
-		return 0;
-	}
-
-
-	if(std::string(argv[1]) != "-f" && std::string(argv[1]) != "-m") {
-		std::cout << "ERRO: parâmetros conflitantes" << '\n';
-		printHelp();
-		return 1;
-	}
-
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
-
-  int nLinhas = 1;
-  int tipo = 0; // 0  heap de max 1 heap de min
-  Heap* h;
-  std::vector<int> array;
-
-  if(std::string(argv[1]) == "-m" && std::string(argv[2]) == "-f") {
-    const char* arquivoEntrada = argv[3];
-  	// std::cout << "Cosntruindo heap a partir de: " << arquivoEntrada << '\n';
-  	std::ifstream entrada(arquivoEntrada);
-
-  	if(!entrada) {
-      std::cout << "Arquivo nao lido" << "\n";
+  ////////////////////////////////////////////////////////////////////////////
+  //Pegando tamanho do hash se informado
+  if(argc > 2 && std::string(argv[1]) == "-m") {
+    try {
+      tamanhoHash = atoi(argv[2]);
+    } catch (...) {
+      std::cout << "ERRO: parâmetros conflitantes" << '\n';
+      printHelp();
       return 1;
     }
+  }
 
-  	std::string linha;
-
-  	while (std::getline(entrada, linha)) {
-    	nLinhas++;
-  	}
-
-    int indice = 0;
-
-    std::string linha2;
-  	std::ifstream entrada2(arquivoEntrada);
-
-    while (std::getline(entrada2, linha)) {
-      int chave = atoi(linha.c_str());
-      array.push_back(chave);
-      indice++;
+  if (argc > 4 && std::string(argv[3]) == "-m") {
+    try {
+      tamanhoHash = atoi(argv[4]);
+    } catch (...) {
+      std::cout << "ERRO: parâmetros conflitantes" << '\n';
+      printHelp();
+      return 1;
     }
-    tipo++;
-	}
+  }
 
-  if (argc > 3) {
-    if(std::string(argv[1]) == "-f" && std::string(argv[3]) == "-m") {
+  hash = new Hash(tamanhoHash);
+
+  ////////////////////////////////////////////////////////////////////////////
+  //Buscando entradas dos arquivos
+
+  if(argc > 2 && std::string(argv[1]) == "-f") {
+    try {
+
       const char* arquivoEntrada = argv[2];
-      // std::cout << "Cosntruindo heap a partir de: " << arquivoEntrada << '\n';
-      std::ifstream entrada(arquivoEntrada);
+    	std::ifstream entrada(arquivoEntrada);
 
-      if(!entrada) {
-        std::cout << "Arquivo nao lido" << "\n";
-        return 1;
+    	if(!entrada) {
+    	   std::cout << "Arquivo nao lido" << "\n";
+    	    return 1;
       }
 
-      std::string linha;
+    	std::string linha;
+    	No* n = nullptr;
 
-      while (std::getline(entrada, linha)) {
-        nLinhas++;
-      }
+    	while (std::getline(entrada, linha)) {
+    		int chave = atoi(linha.c_str());
+    		n = new No(chave);
+    		hash->inserirNo(n);
+    	}
 
-      int indice = 0;
-
-      std::string linha2;
-      std::ifstream entrada2(arquivoEntrada);
-
-      while (std::getline(entrada2, linha)) {
-        int chave = atoi(linha.c_str());
-        array.push_back(chave);
-        indice++;
-      }
-      tipo++;
-    }
-  }
-
-
-  if((argc == 5 || argc == 4) && std::string(argv[1]) == "-f") {
-    const char* arquivoEntrada = argv[2];
-    // std::cout << "Cosntruindo heap a partir de: " << arquivoEntrada << '\n';
-    std::ifstream entrada(arquivoEntrada);
-
-    if(!entrada) {
-      std::cout << "Arquivo nao lido" << "\n";
+    } catch (...) {
+      std::cout << "Problema ao ler o arquivo." << '\n';
+      printHelp();
       return 1;
     }
-
-    std::string linha;
-
-    while (std::getline(entrada, linha)) {
-      nLinhas++;
-    }
-
-    int indice = 0;
-
-    std::string linha2;
-    std::ifstream entrada2(arquivoEntrada);
-
-    while (std::getline(entrada2, linha)) {
-      int chave = atoi(linha.c_str());
-      array.push_back(chave);
-      indice++;
-    }
   }
 
+  if(argc > 4 && std::string(argv[3]) == "-f") {
+    try {
 
-  if(argc == 3 && std::string(argv[1]) == "-f") {
-    const char* arquivoEntrada = argv[2];
-    // std::cout << "Cosntruindo heap a partir de: " << arquivoEntrada << '\n';
-    std::ifstream entrada(arquivoEntrada);
+      const char* arquivoEntrada = argv[4];
+    	std::ifstream entrada(arquivoEntrada);
 
-    if(!entrada) {
-      std::cout << "Arquivo nao lido" << "\n";
+    	if(!entrada) {
+    	   std::cout << "Arquivo nao lido" << "\n";
+    	    return 1;
+      }
+
+    	std::string linha;
+    	No* n = nullptr;
+
+    	while (std::getline(entrada, linha)) {
+    		int chave = atoi(linha.c_str());
+    		n = new No(chave);
+    		hash->inserirNo(n);
+    	}
+
+    } catch (...) {
+      std::cout << "Problema ao ler o arquivo." << '\n';
+      printHelp();
       return 1;
     }
-
-    std::string linha;
-
-    while (std::getline(entrada, linha)) {
-      nLinhas++;
-    }
-
-    int indice = 0;
-
-    std::string linha2;
-    std::ifstream entrada2(arquivoEntrada);
-
-    while (std::getline(entrada2, linha)) {
-      int chave = atoi(linha.c_str());
-      array.push_back(chave);
-      indice++;
-    }
   }
 
+  ////////////////////////////////////////////////////////////////////////////
+  //Saida para arquivo
 
+  if (argc > 4 && std::string(argv[3]) == "-o") {
+    try {
 
-  int arr2[nLinhas+1];
-  arr2[0] = nLinhas;
-  for (int i = 1; i < nLinhas; i++) {
-    arr2[i] = array[i-1];
-  }
+      const char* nome = argv[4];
 
-  h = new Heap(arr2, nLinhas, tipo);
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  if(argc == 5 && std::string(argv[3]) == "-o") {
-
-		const char* nome = argv[4];
-		try {
       std::ofstream out(nome);
 			std::streambuf *coutbuf = std::cout.rdbuf();
 			std::cout.rdbuf(out.rdbuf());
 
-      if (tipo == 0) {
-        h->heapsortMax();
-      } else {
-        h->heapsortMin();
+      No** tabela = hash->getHash();
+
+      for (int i = 0; i < tamanhoHash; i++) {
+        std::cout << i << ": ";
+
+        No* print = tabela[i];
+
+        while (print != nullptr) {
+          std::cout << print->getChave() << ' ';
+          print = print->getProx();
+        }
+
+        std::cout << '\n';
+
       }
 
-      int* saida = h->getHeap();
-
-      for (int i = nLinhas-1; i > 1; i--) {
-        std::cout << saida[i] << ' ';
-      }
 			return 0;
-		} catch(...) {
+
+    } catch (...) {
 			std::cout << "Erro ao manusear a saida, verifique suas permissões parça" << '\n';
 			return 1;
-		}
-		return 0;
-	} else if(argc == 6 && std::string(argv[4]) == "-o") {
+    }
+  }
 
-		const char* nome = argv[5];
-		try {
-			std::ofstream out(nome);
+  if (argc > 6 && std::string(argv[5]) == "-o") {
+    try {
+
+    	const char* nome = argv[6];
+
+      std::ofstream out(nome);
 			std::streambuf *coutbuf = std::cout.rdbuf();
 			std::cout.rdbuf(out.rdbuf());
 
-      if (tipo == 0) {
-        h->heapsortMax();
-      } else {
-        h->heapsortMin();
+      No** tabela = hash->getHash();
+
+      for (int i = 0; i < tamanhoHash; i++) {
+        std::cout << i << ": ";
+
+        No* print = tabela[i];
+
+        while (print != nullptr) {
+          std::cout << print->getChave() << ' ';
+          print = print->getProx();
+        }
+
+        std::cout << '\n';
+
       }
 
-      int* saida = h->getHeap();
-
-      for (int i = nLinhas-1; i > 1; i--) {
-        std::cout << saida[i] << ' ';
-      }
 			return 0;
-		} catch(...) {
+
+    } catch (...) {
 			std::cout << "Erro ao manusear a saida, verifique suas permissões parça" << '\n';
 			return 1;
-		}
-		return 0;
-	}
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  // std::cout << tipo << '\n';
-  if (tipo == 0) {
-    h->heapsortMax();
-  } else {
-    h->heapsortMin();
+    }
   }
+//////////////////////////////////////////////////////////////////////////////
 
-  int* saida = h->getHeap();
 
-  for (int i = nLinhas-1; i > 1; i--) {
-    std::cout << saida[i] << ' ';
+  No** tabela = hash->getHash();
+
+  for (int i = 0; i < tamanhoHash; i++) {
+    std::cout << i << ": ";
+
+    No* print = tabela[i];
+
+    while (print != nullptr) {
+      std::cout << print->getChave() << ' ';
+      print = print->getProx();
+    }
+
+    std::cout << '\n';
+
   }
 
   return 0;
