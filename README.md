@@ -7,7 +7,7 @@
 - [x] Arvore Rubro-Negra (sem remoção)
 - [ ] Arvore-B (sem remoção)
 - [x] Heap
-- [ ] Hash
+- [x] Hash
 
 Estruturas desenvolvidas confirme orientação do Prof. Rian Gabriel Pinheiro, UAG-UFRPE.
 
