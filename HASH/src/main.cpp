@@ -19,19 +19,6 @@ int main(int argc, char* argv[]) {
   ////////////////////////////////////////////////////////////////////////////
   //Checagem dos parametros
 
-  if (argc > 1) {
-    for (int i = 1; i < argc; i++) {
-      if((argv[i] != std::string("-f")) || (argv[i] != std::string("-o")) || (argv[i] != std::string("-m")) || (argv[i] != std::string("-h"))) {
-        const char* c = std::string(argv[i]).c_str();
-        if (c[0] == '-') {
-          std::cout << "ERRO: parâmetros conflitantes" << '\n';
-          printHelp();
-          return 1;
-        }
-      }
-    }
-  }
-
   ////////////////////////////////////////////////////////////////////////////
 
   //Tamanho padrao do HASH
