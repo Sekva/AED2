@@ -9,6 +9,14 @@
 - [x] Heap
 - [x] Hash
 
+## Grafos
+
+### Arvore Geradora Minima
+- [x] Kruskal
+- [] Prim
+- [] Floyd-Warshall
+- [] ?
+
 Estruturas desenvolvidas confirme orientação do Prof. Rian Gabriel Pinheiro, UAG-UFRPE.
 
 [Instruções de implementação](http://bcc.uag.ufrpe.br/~rian/disc/ListaAEDII.pdf)

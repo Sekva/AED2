@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include "grafo.hpp"
 
 Grafo::Grafo() {
@@ -37,24 +38,60 @@ void Grafo::addAresta(Aresta* a) {
 }
 
 std::vector<Aresta*> Grafo::getHeapMinArestas() {
-
+	return this->arestas;
 }
 
 void Grafo::buildMinHeap() {
-	this->heapMinArestas = this->arestas;
-	this->heapMinArestas.push_back(nullptr);
-	for(int i = this->heapMinArestas.size() - 1; i > 0; i++) {
-		this->heapMinArestas[i] = this->heapMinArestas[i-1];
-	}
-	this->heapMinArestas[0] = this->heapMinArestas.size() - 1;
-
-
-
-	for () {
-
-	}
 }
 
 void Grafo::minHeapfy() {
+}
+
+bool Grafo::compararArestas(Aresta* a, Aresta*b) {
+	return a->getPeso() < b->getPeso();
+}
+
+std::vector<Aresta*> Grafo::kruskal() {
+	
+	std::vector<Conjunto*> conjuntos;
+	Conjunto* c;
+	for(int i = 0; i < this->vertices.size(); i++) {
+		c = new Conjunto();
+		c->addVertice(this->vertices[i]);
+		conjuntos.push_back(c);
+	}
+
+	std::vector<Aresta*> x;
+
+	std::sort(this->arestas.begin(), this->arestas.end(), this->compararArestas);
+
+	for(int i = 0; i < this->arestas.size(); i++) {
+		Vertice* v1 = this->arestas[i]->getV1();
+		Vertice* v2 = this->arestas[i]->getV2();
+
+		Conjunto* cV1;
+		Conjunto* cV2;
+
+		int indexCV1;
+		int indexCV2;
+
+		for(int j = 0; j < conjuntos.size(); j++) {
+			if(conjuntos[j]->contemVertice(v1)) {
+				cV1 = conjuntos[j];
+				indexCV1 = j;
+			}
+			if(conjuntos[j]->contemVertice(v2)) {
+				cV2 = conjuntos[j];
+				indexCV2 = j;
+			}
+		}
+
+		if (cV1 != cV2) {
+			x.push_back(this->arestas[i]);
+			cV1->unirConjunto(cV2);
+			conjuntos.erase(conjuntos.begin() + indexCV2);
+		}
+	}
+	return x;
 
 }

@@ -8,7 +8,8 @@ BUILD_DIR = ./build/
 SRCS = main.cpp \
 	   vertice.cpp \
 	   aresta.cpp \
-	   conjunto.cpp
+	   conjunto.cpp \
+	   grafo.cpp
 
 BIN_NOME = asd
 

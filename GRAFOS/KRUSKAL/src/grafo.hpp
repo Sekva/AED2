@@ -13,7 +13,7 @@ class Grafo {
 		std::vector<Aresta*> heapMinArestas;
 
 		void buildMinHeap();
-		void minHeapfy;
+		void minHeapfy();
 
 	public:
 		Grafo();
@@ -24,5 +24,8 @@ class Grafo {
 		void addVertice(Vertice* v);
 		void addAresta(Aresta* a);
 		std::vector<Aresta*> getHeapMinArestas();
+		
+		static bool compararArestas(Aresta* a, Aresta* b);
+		std::vector<Aresta*> kruskal();
 };
 #endif
