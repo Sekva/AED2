@@ -12,6 +12,7 @@ Vertice::Vertice(int nVizinhos, int chave) {
 
 	this->custo = 0;
 	this->pai = nullptr;
+	this->distancia = 0;
 }
 
 void Vertice::add_vizinho(Vertice *v) {
@@ -33,4 +34,16 @@ int Vertice::getNVizinhos() {
 
 int Vertice::getMarcado() {
 	return this->marcado;
+}
+
+int Vertice::marcar(int marca) {
+	this->marcado = marca;
+}
+
+void Verice::setPai(Vertice* v) {
+	this->pai = v;
+}
+
+void Vertice::setCusto(int custo) {
+	this->custo = custo;
 }

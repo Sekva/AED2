@@ -11,9 +11,14 @@ class Grafo {
 		std::vector<Vertice*> vertices;
 		std::vector<Aresta*> arestas;
 		std::vector<Aresta*> heapMinArestas;
+		std::vector<Vertice*> heapMinVertices;
 
 		void buildMinHeap();
-		void minHeapfy();
+		void minHeapfy(int i);
+
+		void clonarHeap();
+
+
 
 	public:
 		Grafo();

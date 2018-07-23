@@ -41,10 +41,40 @@ std::vector<Aresta*> Grafo::getHeapMinArestas() {
 	return this->arestas;
 }
 
-void Grafo::buildMinHeap() {
+void Grafo::clonarHeap() {
+	this->heapMinVertices[0] = nullptr;
+	for(int i = 0; i< this->vertices.size(); i++) {
+		this->heapMinVertices.push_back(this->vertices[i]);
+	}
 }
 
-void Grafo::minHeapfy() {
+void Grafo::buildMinHeap() {
+	for(int i = (this->heapMinVertices.size()/2); i > 0; i--) {
+		this->minHeapfy(i);
+	}
+}
+
+void Grafo::minHeapfy(int i) {
+	int esq = 2*i;
+	int dir = (2*i) + 1;
+	int menor = i;
+
+	if(e < this->heapMinVertices.size() 
+		&& this->heapMinVertices[e]->getCusto() < this->heapMinVertices[i]->getCusto()) {
+
+		menor = e;
+	}
+
+	if(d < this->heapMinVertices.size()
+		&& this->heapMinVertices[d]->getCusto() < this->heapMinVertices[menor]->getCusto()) {
+		
+		menor = d;
+	}
+
+	if(menor != i) {
+		std::swap(this->heapMinVertices[menor], this->heapMinVertices[i]);
+		this->minHeapfy(menor);
+	}
 }
 
 bool Grafo::compararArestas(Aresta* a, Aresta*b) {
@@ -93,5 +123,4 @@ std::vector<Aresta*> Grafo::kruskal() {
 		}
 	}
 	return x;
-
 }

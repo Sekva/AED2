@@ -1,3 +1,6 @@
+#ifndef VERTICE_HPP
+#define VERTICE_HPP
+
 class Vertice {
 
 	private:
@@ -6,9 +9,10 @@ class Vertice {
 		int n_vizinhos;
 		int quantidadeVizinhos;
 
-		//atrubutos pra PRIM e KRUSKAL
+		//atrubutos pra PRIM e DIJKSTRA
 		int custo;
 		Vertice *pai;
+		int distancia;
 		
 	public:
 		int chave;
@@ -16,7 +20,11 @@ class Vertice {
 		void add_vizinho(Vertice *v);
 		Vertice** getVizinhos();
 		int getCusto();
+		void setCusto(int custo);
 		int getMarcado();
 		int getNVizinhos();
-
+		void marcar(int marca);
+		void setPai(Vertice* v);
 };
+
+#endif
