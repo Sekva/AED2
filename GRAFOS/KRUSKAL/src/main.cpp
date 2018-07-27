@@ -11,6 +11,31 @@ int main() {
 	Vertice* v5 = new Vertice(1, 5);
 	Vertice* v6 = new Vertice(3, 6);
 
+	v1->add_vizinho(v2);
+	v1->add_vizinho(v3);
+	v1->add_vizinho(v4);
+	
+	v2->add_vizinho(v1);
+	v2->add_vizinho(v3);
+	v2->add_vizinho(v4);
+
+	v3->add_vizinho(v1);
+	v3->add_vizinho(v2);
+	v3->add_vizinho(v4);
+	v3->add_vizinho(v6);
+
+	v4->add_vizinho(v1);
+	v4->add_vizinho(v2);
+	v4->add_vizinho(v3);
+	v4->add_vizinho(v6);
+
+	v5->add_vizinho(v6);
+
+	v6->add_vizinho(v3);
+	v6->add_vizinho(v4);
+	v6->add_vizinho(v5);
+
+
 	Aresta* a1 = new Aresta(4, v1, v2);
 	Aresta* a2 = new Aresta(1, v1, v3);
 	Aresta* a3 = new Aresta(3, v1, v4);
@@ -41,8 +66,25 @@ int main() {
 	g->addAresta(a8);
 	g->addAresta(a9);
 
-	std::vector<Aresta*> saida = g->kruskal();
+	std::vector<Aresta*> saida;// = g->kruskal();
 	int soma = 0;
+	
+	g->prim();
+
+	std::vector<Vertice*> vertices = g->getVertices();
+	//std::cout << vertices.size() << "  asd\n";
+	
+
+	for (int i = 0; i < vertices.size(); i++) {
+		Vertice* v  = vertices[i];
+		Vertice* pai = v->getPai();
+		if(pai) {
+			std::cout << v->chave << "trazido por " << pai->chave << "\n";	
+		}
+
+	}
+
+	return 0;
 
 	for(Aresta* a : saida) {
 		std::cout << a->getPeso() << " v1: " << a->getV1()->chave << " v2: " << a->getV2()->chave << "\n";

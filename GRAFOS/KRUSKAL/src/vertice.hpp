@@ -25,6 +25,7 @@ class Vertice {
 		int getNVizinhos();
 		void marcar(int marca);
 		void setPai(Vertice* v);
+		Vertice* getPai();
 };
 
 #endif

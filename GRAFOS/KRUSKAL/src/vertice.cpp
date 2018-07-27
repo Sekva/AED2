@@ -3,6 +3,8 @@
 
 #include "vertice.hpp"
 
+#include <iostream>
+
 Vertice::Vertice(int nVizinhos, int chave) {
 	this->chave = chave;
 	this->marcado = FALSE;
@@ -36,14 +38,18 @@ int Vertice::getMarcado() {
 	return this->marcado;
 }
 
-int Vertice::marcar(int marca) {
+void Vertice::marcar(int marca) {
 	this->marcado = marca;
 }
 
-void Verice::setPai(Vertice* v) {
+void Vertice::setPai(Vertice* v) {
 	this->pai = v;
 }
 
 void Vertice::setCusto(int custo) {
 	this->custo = custo;
+}
+
+Vertice* Vertice::getPai() {
+	return this->pai;
 }

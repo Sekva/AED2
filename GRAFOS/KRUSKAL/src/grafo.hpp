@@ -18,8 +18,6 @@ class Grafo {
 
 		void clonarHeap();
 
-
-
 	public:
 		Grafo();
 		int getNE();
@@ -31,6 +29,8 @@ class Grafo {
 		std::vector<Aresta*> getHeapMinArestas();
 		
 		static bool compararArestas(Aresta* a, Aresta* b);
+		
 		std::vector<Aresta*> kruskal();
+		void prim();
 };
 #endif
