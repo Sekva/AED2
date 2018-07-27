@@ -13,9 +13,10 @@
 
 ### Arvore Geradora Minima
 - [x] Kruskal
-- [] Prim
+- [x] Prim
+- [x] Dijkstra
 - [] Floyd-Warshall
-- [] ?
+- [] Fulkerson-Ford?
 
 Estruturas desenvolvidas confirme orientação do Prof. Rian Gabriel Pinheiro, UAG-UFRPE.
 
