@@ -158,7 +158,7 @@ void Grafo::prim() {
 
 	while(this->heapMinVertices.size() > 1) {
 		Vertice* u = this->heapMinVertices[1];
-		this->heapMinVertices.erase(this->heapMinVertices.begin());
+		this->heapMinVertices.erase(this->heapMinVertices.begin()+1);
 		this->buildMinHeap();
 
 		int nVizinhos = u->getNVizinhos();
@@ -189,4 +189,62 @@ void Grafo::prim() {
 			}
 		}
 	}
+}
+
+void Grafo::dijkstra(Vertice* s) {
+
+	for(int i = 0; i < this->vertices.size(); i ++) {
+		this->vertices[i]->setPai(nullptr);
+		this->vertices[i]->setCusto(std::numeric_limits<int>::max());
+	}
+
+	s->setCusto(0);
+
+	this->clonarHeap();
+	this->buildMinHeap();
+
+	std::sort(this->arestas.begin(), this->arestas.end(), this->compararArestas);
+
+	while(this->heapMinVertices.size() > 1) {
+		Vertice* u = this->heapMinVertices[1];
+		this->heapMinVertices.erase(this->heapMinVertices.begin()+1);
+		this->buildMinHeap();
+
+		int nVizinhos = u->getNVizinhos();
+		Vertice** vizinhos = u->getVizinhos();
+
+		u->marcar(1);
+
+		for(int i = 0; i < nVizinhos; i++) {
+			if(!vizinhos[i]->getMarcado()) {
+
+				Aresta* a = nullptr;
+
+				for(int j = 0; j < this->arestas.size(); j++) {
+					if (u == this->arestas[j]->getV1() && vizinhos[i] == this->arestas[j]->getV2()){
+						a = this->arestas[j];
+						break;
+					}
+				}
+
+				if(a == nullptr) {
+					return;
+				}
+
+				if (vizinhos[i]->getCusto() > u->getCusto() + a->getPeso()) {
+					vizinhos[i]->setCusto(u->getCusto() + a->getPeso());
+					vizinhos[i]->setPai(u);
+					this->buildMinHeap();
+				}
+
+			}
+		}
+	}
+}
+
+void Grafo::criarMatriz() {
+
+	
+
+
 }
