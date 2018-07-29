@@ -243,8 +243,86 @@ void Grafo::dijkstra(Vertice* s) {
 }
 
 void Grafo::criarMatriz() {
-
 	
+	int tamanho = this->vertices.size();
+	this->matriz = new int*[tamanho];
+	this->roteiro = new int*[tamanho];
+	
+	for(int i = 0; i < tamanho; i++) {
+		this->matriz[i] = new int[tamanho];
+		this->roteiro[i] = new int[tamanho];
+	}
 
+	int maiorPesoAresta = 0;
 
+	for (Aresta* a : this->arestas) {
+		if (maiorPesoAresta < a->getPeso()) {
+			maiorPesoAresta = a->getPeso();
+		}
+	}
+
+	for (int i = 0; i < tamanho; i++) {
+		for (int j = 0; j < tamanho; j++) {
+			
+			if(i == j) {
+				this->matriz[i][j] = 0;
+			} else {
+				this->matriz[i][j] = maiorPesoAresta + 1;
+			}
+
+			this->roteiro[i][j] = -1;
+		}
+	}
+	
+	for (int i = 0; i < this->arestas.size(); i++) {
+		Aresta* a = this->arestas[i];
+		this->matriz[(a->getV1()->chave)-1][(a->getV2()->chave)-1] = a->getPeso();
+		this->roteiro[(a->getV1()->chave)-1][(a->getV2()->chave)-1] = a->getV1()->chave;
+	}
+}
+
+int** Grafo::matriz2D() {
+
+	int tamanho = this->vertices.size();
+
+	int** d = new int*[tamanho];
+	for(int i = 0; i < tamanho; i++) {
+		d[i] = new int[tamanho];
+	}
+
+	for(int i = 0; i < tamanho; i++) {
+		for(int j = 0; j < tamanho; j++) {
+			d[i][j] = std::numeric_limits<int>::max();
+		}
+	}
+
+	for(int i = 0; i < tamanho; i++) {
+		d[i][i] = 0;
+	}
+
+	return d;
+}
+
+int** Grafo::getRoteiro() {
+	return this->roteiro;
+}
+
+int** Grafo::floyd_warshall() {
+	
+	this->criarMatriz();
+
+	int tamanho = this->vertices.size();
+
+	int** atual = this->matriz;
+	for(int k = 0; k < tamanho; k++) {
+		for(int i = 0; i < tamanho; i++) {
+			for (int j = 0; j < tamanho; j++) {
+				if (atual[i][j] > atual[i][k] + atual[k][j]) {
+					atual[i][j] = atual[i][k] + atual[k][j];
+					this->roteiro[i][j] = this->roteiro[k][j];
+				}
+			}
+		}
+	}
+	return atual;
 }

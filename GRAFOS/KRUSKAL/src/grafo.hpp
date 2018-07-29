@@ -13,13 +13,16 @@ class Grafo {
 		std::vector<Aresta*> heapMinArestas;
 		std::vector<Vertice*> heapMinVertices;
 
-		Aresta* [][] matriz;
+		int** matriz;
+		int** roteiro;
 		void criarMatriz();
 
 
 		void buildMinHeap();
 		void minHeapfy(int i);
 		void clonarHeap();
+
+		int** matriz2D();
 
 	public:
 		Grafo();
@@ -36,5 +39,7 @@ class Grafo {
 		std::vector<Aresta*> kruskal();
 		void prim();
 		void dijkstra(Vertice* s);
+		int** floyd_warshall();
+		int** getRoteiro();
 };
 #endif
