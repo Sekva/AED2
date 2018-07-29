@@ -15,7 +15,7 @@
 - [x] Kruskal
 - [x] Prim
 - [x] Dijkstra
-- [] Floyd-Warshall
+- [x] Floyd-Warshall
 - [] Fulkerson-Ford?
 
 Estruturas desenvolvidas confirme orientação do Prof. Rian Gabriel Pinheiro, UAG-UFRPE.
