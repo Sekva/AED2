@@ -11,7 +11,8 @@ void printHelp() {
 	std::cout << "\t-h : mostra o help" << '\n';
 	std::cout << "\t-o <arquivo> : redireciona a saida para o ‘‘arquivo’’" << '\n';
 	std::cout << "\t-f <arquivo> : indica o ‘‘arquivo’’ que contém o grafo de entrada" << '\n';
-	std::cout << "\t-s : mostra a solução (em ordem crescente)" << '\n';
+	std::cout << "\t-i           : vértice inicial (obrigatório)" << '\n';
+	std::cout << "\t-l           : vértice final (opcional)" << '\n';
 
 	exit(1);
 }
