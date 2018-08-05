@@ -7,11 +7,11 @@
 
 void printHelp() {
 	std::cout << "\n\nUso: ./executavel -f <entrada> [opções]\n" << '\n';
-   std::cout << "\tOpções:\n" << '\n';
-   std::cout << "\t-h : mostra o help" << '\n';
-   std::cout << "\t-o <arquivo> : redireciona a saida para o ‘‘arquivo’’" << '\n';
-   std::cout << "\t-f <arquivo> : indica o ‘‘arquivo’’ que contém o grafo de entrada" << '\n';
-   std::cout << "\t-s : mostra a solução (em ordem crescente)" << '\n';
+	std::cout << "\tOpções:\n" << '\n';
+	std::cout << "\t-h : mostra o help" << '\n';
+	std::cout << "\t-o <arquivo> : redireciona a saida para o ‘‘arquivo’’" << '\n';
+	std::cout << "\t-f <arquivo> : indica o ‘‘arquivo’’ que contém o grafo de entrada" << '\n';
+	std::cout << "\t-s : mostra a solução (em ordem crescente)" << '\n';
 
 	exit(1);
 }
@@ -19,7 +19,7 @@ void printHelp() {
 int main(int argc, char* argv[]) {
 
 
-	if (argc < 3) {
+	if (argc <= 4) {
 		printHelp();
 	}
 
@@ -79,6 +79,7 @@ int main(int argc, char* argv[]) {
 	}
 
 
+
 	for (int j = 1; j <= NVTotal; j++) {
 		int eu = j;
 
@@ -101,15 +102,14 @@ int main(int argc, char* argv[]) {
 
 			if (v == eu) {
 				vertices[eu-1]->add_vizinho(vertices[e-1]);
-				Aresta* a = new Aresta(peso, vertices[eu-1], vertices[e-1]);
-				arestas.push_back(a);
 			}
 
 			if (e == eu) {
 				vertices[eu-1]->add_vizinho(vertices[v-1]);
-				Aresta* a = new Aresta(peso, vertices[eu-1], vertices[e-1]);
+				Aresta* a = new Aresta(peso, vertices[v-1], vertices[eu-1]);
 				arestas.push_back(a);
 			}
+
 		}
 
 		entrada.clear();
@@ -126,32 +126,41 @@ int main(int argc, char* argv[]) {
 		g->addAresta(a);
 	}
 
-	std::vector<Aresta*> saida = g->kruskal();
-	int soma = 0;
-
-	for (Aresta* a : saida) {
-		soma += a->getPeso();
+	int inicial = 1;
+	if (argc > 4 && std::string(argv[3]) == std::string("-i")) {
+		inicial = atoi(std::string(argv[4]).c_str());
+	} else {
+		printHelp();
 	}
 
-	if (argc > 3 && std::string(argv[3]) == std::string("-s")) {
+	if (!inicial || inicial < 0 || inicial > g->getVertices().size()) {
+		std::cout << "Ponto inicial (-i) invalido" << '\n';
+		exit(1);
+	}
 
+	inicial--;
+	int** saida = g->floyd_warshall();
 
-		if (argc >= 5 && std::string(argv[4]) == std::string("-o")) {
-			const char* nome = argv[5];
+	// for (int i = 0; i < g->getVertices().size(); i++) {
+	// 	std::cout << i + 1 << ":" << saida[inicial][i] << ' ';
+	// }
+
+	if (argc > 6 && std::string(argv[5]) == std::string("-l")) {
+		int destino = atoi(std::string(argv[6]).c_str());
+
+		if (destino == 0) {
+			printHelp();
+		}
+
+		destino--;
+		if (argc > 8 && std::string(argv[7]) == std::string("-o")) {
+			const char* nome = argv[8];
 
 			try {
 				std::ofstream out(nome);
 				std::streambuf *coutbuf = std::cout.rdbuf();
 				std::cout.rdbuf(out.rdbuf());
-				for (int i = 1; i <= vertices.size(); i++) {
-					for (int k = 1; k <= vertices.size(); k++) {
-						for (int j = 0; j < saida.size(); j++) {
-							if (saida[j]->getV1()->chave == i && saida[j]->getV2()->chave == k) {
-								std::cout << "(" << saida[j]->getV1()->chave << "," << saida[j]->getV2()->chave << ") ";
-							}
-						}
-					}
-				}
+				std::cout << destino+1 << ":" << saida[inicial][destino] << '\n';
 				return 0;
 			} catch(...) {
 				std::cout << "Erro ao manusear a saida, verifique suas permissões parça" << '\n';
@@ -160,35 +169,51 @@ int main(int argc, char* argv[]) {
 
 		}
 
-		for (int i = 1; i <= vertices.size(); i++) {
-			for (int k = 1; k <= vertices.size(); k++) {
-				for (int j = 0; j < saida.size(); j++) {
-					if (saida[j]->getV1()->chave == i && saida[j]->getV2()->chave == k) {
-						std::cout << "(" << saida[j]->getV1()->chave << "," << saida[j]->getV2()->chave << ") ";
-					}
-				}
-			}
-		}
-
-
-		std::cout << '\n';
+		std::cout << destino+1 << ":" << saida[inicial][destino] << '\n';
 	} else {
-		if (argc > 4 && std::string(argv[3]) == std::string("-o")) {
-			const char* nome = argv[4];
+		if (argc > 6 && std::string(argv[5]) == std::string("-o")) {
+			const char* nome = argv[6];
 
 			try {
 				std::ofstream out(nome);
 				std::streambuf *coutbuf = std::cout.rdbuf();
 				std::cout.rdbuf(out.rdbuf());
-				std::cout << soma;
-				return 0;
+				for (int i = 0; i < g->getVertices().size(); i++) {
+					std::cout << i + 1 << ":" << saida[inicial][i] << ' ';
+				}
+
 			} catch(...) {
 				std::cout << "Erro ao manusear a saida, verifique suas permissões parça" << '\n';
 				exit(1);
 			}
 		}
-		std::cout << soma << '\n';
+
+		for (int i = 0; i < g->getVertices().size(); i++) {
+			std::cout << i + 1 << ":" << saida[inicial][i] << ' ';
+		}
+
 	}
 
 	return 0;
+
+	int** matriz = g->floyd_warshall();
+	int tamanho = g->getNV();
+
+	for(int i = 0; i < tamanho; i++) {
+		for(int j = 0; j < tamanho; j++) {
+			std::cout << matriz[i][j] << " ";
+		}
+		std::cout << "\n";
+	}
+
+	std::cout << "\n\n\n";
+	int** roteiro = g->getRoteiro();
+
+	for(int i = 0; i < tamanho; i++) {
+		for(int j = 0; j < tamanho; j++) {
+			std::cout << roteiro[i][j] << " ";
+		}
+		std::cout << "\n";
+	}
+
 }

@@ -11,7 +11,7 @@ SRCS = main.cpp \
 	   conjunto.cpp \
 	   grafo.cpp
 
-BIN_NOME = kruskal
+BIN_NOME = prim
 
 OBJS = $(SRCS:.cpp=.o)
 

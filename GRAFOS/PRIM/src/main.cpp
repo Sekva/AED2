@@ -7,11 +7,11 @@
 
 void printHelp() {
 	std::cout << "\n\nUso: ./executavel -f <entrada> [opções]\n" << '\n';
-   std::cout << "\tOpções:\n" << '\n';
-   std::cout << "\t-h : mostra o help" << '\n';
-   std::cout << "\t-o <arquivo> : redireciona a saida para o ‘‘arquivo’’" << '\n';
-   std::cout << "\t-f <arquivo> : indica o ‘‘arquivo’’ que contém o grafo de entrada" << '\n';
-   std::cout << "\t-s : mostra a solução (em ordem crescente)" << '\n';
+	std::cout << "\tOpções:\n" << '\n';
+	std::cout << "\t-h : mostra o help" << '\n';
+	std::cout << "\t-o <arquivo> : redireciona a saida para o ‘‘arquivo’’" << '\n';
+	std::cout << "\t-f <arquivo> : indica o ‘‘arquivo’’ que contém o grafo de entrada" << '\n';
+	std::cout << "\t-s : mostra a solução (em ordem crescente)" << '\n';
 
 	exit(1);
 }
@@ -79,6 +79,7 @@ int main(int argc, char* argv[]) {
 	}
 
 
+
 	for (int j = 1; j <= NVTotal; j++) {
 		int eu = j;
 
@@ -126,12 +127,21 @@ int main(int argc, char* argv[]) {
 		g->addAresta(a);
 	}
 
-	std::vector<Aresta*> saida = g->kruskal();
-	int soma = 0;
+	// std::vector<Aresta*> asd = g->getArestas();
+	// std::vector<Vertice*> vasd = g->getVertices();
+	//
+	// for (auto a : vasd) {
+	// 	for (int i = 0; i < a->getNVizinhos(); i++) {
+	// 		std::cout << a->chave << " de " << a->getVizinhos()[i]->chave << '\n';
+	// 	}
+	// }
+	//
+	// for (auto a : asd) {
+	// 	std::cout << a->getV1()->chave << a->getV2()->chave << a->getPeso() << '\n';
+	// }
 
-	for (Aresta* a : saida) {
-		soma += a->getPeso();
-	}
+	g->prim();
+
 
 	if (argc > 3 && std::string(argv[3]) == std::string("-s")) {
 
@@ -143,13 +153,16 @@ int main(int argc, char* argv[]) {
 				std::ofstream out(nome);
 				std::streambuf *coutbuf = std::cout.rdbuf();
 				std::cout.rdbuf(out.rdbuf());
-				for (int i = 1; i <= vertices.size(); i++) {
-					for (int k = 1; k <= vertices.size(); k++) {
-						for (int j = 0; j < saida.size(); j++) {
-							if (saida[j]->getV1()->chave == i && saida[j]->getV2()->chave == k) {
-								std::cout << "(" << saida[j]->getV1()->chave << "," << saida[j]->getV2()->chave << ") ";
+				for (int i = 1; i <= g->getVertices().size(); i++) {
+					for (int j = 1; j <= g->getVertices().size(); j++) {
+						for (Vertice* a : g->getVertices()) {
+							if (!(a->getPai() == nullptr)) {
+								if (a->getPai()->chave == i && a->chave == j) {
+									std::cout << "(" << a->getPai()->chave << "," << a->chave << ") ";
+								}
 							}
 						}
+
 					}
 				}
 				return 0;
@@ -160,18 +173,21 @@ int main(int argc, char* argv[]) {
 
 		}
 
-		for (int i = 1; i <= vertices.size(); i++) {
-			for (int k = 1; k <= vertices.size(); k++) {
-				for (int j = 0; j < saida.size(); j++) {
-					if (saida[j]->getV1()->chave == i && saida[j]->getV2()->chave == k) {
-						std::cout << "(" << saida[j]->getV1()->chave << "," << saida[j]->getV2()->chave << ") ";
+		for (int i = 1; i <= g->getVertices().size(); i++) {
+			for (int j = 1; j <= g->getVertices().size(); j++) {
+				for (Vertice* a : g->getVertices()) {
+					if (!(a->getPai() == nullptr)) {
+						if (a->getPai()->chave == i && a->chave == j) {
+							std::cout << "(" << a->getPai()->chave << "," << a->chave << ") ";
+						}
 					}
 				}
+
 			}
 		}
 
-
 		std::cout << '\n';
+		return 0;
 	} else {
 		if (argc > 4 && std::string(argv[3]) == std::string("-o")) {
 			const char* nome = argv[4];
@@ -180,15 +196,26 @@ int main(int argc, char* argv[]) {
 				std::ofstream out(nome);
 				std::streambuf *coutbuf = std::cout.rdbuf();
 				std::cout.rdbuf(out.rdbuf());
-				std::cout << soma;
+				int soma = 0;
+				for (Vertice* a : g->getVertices()) {
+					soma += a->getCusto();
+				}
+				std::cout << soma << '\n';
 				return 0;
 			} catch(...) {
 				std::cout << "Erro ao manusear a saida, verifique suas permissões parça" << '\n';
 				exit(1);
 			}
 		}
+
+		int soma = 0;
+		for (Vertice* a : g->getVertices()) {
+			soma += a->getCusto();
+		}
 		std::cout << soma << '\n';
+		return 0;
 	}
 
 	return 0;
+
 }
